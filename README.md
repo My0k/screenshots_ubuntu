@@ -1,115 +1,128 @@
 <div align="center">
 
-# 📸 Bandeja de capturas
+# 📸 Screenshot Shelf
 
-**Tus últimas capturas, siempre a mano y listas para arrastrar.**
+**Your latest screenshots, always at hand and ready to drag.**
 
-GNOME guarda todo en `~/Pictures/Screenshots`, pero para adjuntar una captura hay que
-abrir el explorador y buscarla. Esto elimina ese paso.
+GNOME already saves everything to `~/Pictures/Screenshots`, but attaching one means
+opening the file manager and hunting for it. This removes that step.
 
-<img src="docs/bandeja.png" alt="La bandeja mostrando las últimas seis capturas en miniatura" width="820">
+<img src="docs/bandeja.png" alt="The shelf showing the six most recent screenshots as thumbnails" width="820">
+
+<sub>🇪🇸 <a href="README.es.md">Léeme en español</a> · the app's UI is in Spanish</sub>
 
 </div>
 
 ---
 
-## Cómo funciona
+## Why I built this
+
+I work with [Claude Code](https://claude.com/claude-code) in [Ghostty](https://ghostty.org),
+and I kept hitting the same friction: I'd screenshot a piece of frontend I wanted to
+show it — a broken layout, a component that looked off — and then spend more time
+attaching the image than describing the problem. Open Files, find the folder, sort by
+date, drag it across.
+
+So I made a shelf that keeps the last few screenshots one drag away. Take the shot,
+drag the thumbnail straight into the terminal, keep typing. It works with anything that
+accepts a dropped file, but that's the loop it was built for.
+
+## How it works
 
 ```
-Impr Pant  →  la bandeja salta al frente  →  arrastras la miniatura  →  la sueltas donde sea
+Print Screen  →  the shelf pops to the front  →  drag the thumbnail  →  drop it anywhere
 ```
 
-1. **Capturas como siempre**: `Impr Pant`, o el botón *Capturar*.
-2. **La bandeja aparece sola**, con la captura nueva ya seleccionada.
-3. **Arrastras la miniatura** al navegador, Slack, Telegram, GIMP, un correo, Archivos…
+1. **Take a screenshot as usual**: `Print Screen`, or the *Capture* button.
+2. **The shelf comes forward by itself**, with the new screenshot already selected.
+3. **Drag the thumbnail** into a terminal, browser, Slack, Telegram, GIMP, an email…
 
-La selección es de a una: siempre arrastras exactamente la captura que acabas de tomar.
+Selection is one at a time, so you always drag exactly the screenshot you just took.
 
 <div align="center">
-<img src="docs/vacio.png" alt="Estado vacío: sin capturas todavía" width="700">
+<img src="docs/vacio.png" alt="Empty state: no screenshots yet" width="700">
 </div>
 
-## Instalación
+## Install
 
 ```bash
-./install.sh              # lanzador + atajo Super+Shift+S
-./install.sh --autostart  # además arranca con la sesión y vigila en segundo plano
-./install.sh --uninstall  # revierte todo
+./install.sh              # launcher + Super+Shift+S shortcut
+./install.sh --autostart  # also starts with your session and watches in the background
+./install.sh --uninstall  # reverts everything
 ```
 
-> **Requisitos** · Ubuntu con GNOME (probado en 25.10 / GNOME 49, Wayland) y
-> `python3-gi gir1.2-gtk-4.0 gir1.2-adw-1`, que vienen preinstalados.
+> **Requirements** · Ubuntu with GNOME (tested on 25.10 / GNOME 49, Wayland) and
+> `python3-gi gir1.2-gtk-4.0 gir1.2-adw-1`, which ship preinstalled.
 >
-> Corre con el Python del sistema (`/usr/bin/python3`). Si usas pyenv da igual: el
-> lanzador ya apunta al intérprete correcto.
+> Runs on the system Python (`/usr/bin/python3`). If you use pyenv it doesn't matter:
+> the launcher already points at the right interpreter.
 
-## Atajos
+## Shortcuts
 
-| Atajo | Acción |
+| Shortcut | Action |
 |:--|:--|
-| `Super+Shift+S` | Mostrar/ocultar la bandeja (global) |
-| **Arrastrar** | Soltar la captura en otra app |
-| `Ctrl+N` | Capturar pantalla |
-| `Ctrl+C` | Copiar la imagen al portapapeles |
-| `Ctrl+Shift+C` | Copiar la ruta del archivo |
-| `Enter` | Abrir en el visor |
-| `F2` | Renombrar |
-| `Supr` | Mover a la papelera |
-| `F5` | Actualizar |
-| `Esc` | Ocultar la bandeja |
+| `Super+Shift+S` | Show/hide the shelf (global) |
+| **Drag** | Drop the screenshot into another app |
+| `Ctrl+N` | Take a screenshot |
+| `Ctrl+C` | Copy the image to the clipboard |
+| `Ctrl+Shift+C` | Copy the file path |
+| `Enter` | Open in the image viewer |
+| `F2` | Rename |
+| `Delete` | Move to trash |
+| `F5` | Refresh |
+| `Esc` | Hide the shelf |
 
-Clic derecho sobre una miniatura abre el menú con todas las acciones.
+Right-clicking a thumbnail opens a menu with every action.
 
-## Configuración
+## Configuration
 
-Desde *Preferencias* (`Ctrl+,`) o editando `~/.config/screenshot-shelf/config.json`.
+Through *Preferences* (`Ctrl+,`) or by editing `~/.config/screenshot-shelf/config.json`.
 
 <div align="center">
-<img src="docs/preferencias.png" alt="Diálogo de preferencias: capturas visibles, tamaño de miniatura y comportamiento" width="820">
+<img src="docs/preferencias.png" alt="Preferences dialog: visible screenshots, thumbnail size and behaviour" width="820">
 </div>
 
-| Clave | Por defecto | Qué hace |
+| Key | Default | What it does |
 |:--|:--|:--|
-| `max_items` | `6` | Cuántas capturas recientes se muestran |
-| `thumb_size` | `200` | Ancho de las miniaturas en px |
-| `auto_show` | `true` | Traer la bandeja al frente al detectar una captura nueva |
-| `hide_on_drop` | `false` | Esconder la ventana tras arrastrar algo fuera |
-| `close_hides` | `true` | Cerrar la ventana la esconde y sigue vigilando |
-| `watch_dirs` | `[]` | Rutas fijas a vigilar (vacío = autodetectar) |
+| `max_items` | `6` | How many recent screenshots are shown |
+| `thumb_size` | `200` | Thumbnail width in px |
+| `auto_show` | `true` | Bring the shelf forward when a new screenshot appears |
+| `hide_on_drop` | `false` | Hide the window after dragging something out |
+| `close_hides` | `true` | Closing the window hides it and keeps watching |
+| `watch_dirs` | `[]` | Fixed paths to watch (empty = autodetect) |
 
 <details>
-<summary><b>Por qué <code>auto_show</code> necesita un truco en Wayland</b></summary>
+<summary><b>Why <code>auto_show</code> needs a trick on Wayland</b></summary>
 
 <br>
 
-Wayland degrada las peticiones de foco a un aviso de «La ventana está lista». Para
-saltárselo, la ventana se **remapea**: GNOME la trata como recién abierta y le da el
-foco de verdad. Requiere que `focus-new-windows` esté en `smart`, que es el valor por
-defecto.
+Wayland downgrades focus requests to a "Window is ready" notification. To get around
+that, the window is **remapped**: GNOME treats it as freshly opened and actually gives
+it focus. This needs `focus-new-windows` set to `smart`, which is the default.
 
 </details>
 
-## Qué hace por debajo
+## What it does under the hood
 
-- **Vigila las carpetas con `GFileMonitor`**: lo que aparezca ahí se muestra al
-  instante, venga de Impr Pant, de Flameshot o de un `scp`.
-- **Autodetecta las carpetas**: `~/Pictures/Screenshots`, su equivalente en español y
-  lo que tengas configurado en `org.gnome.gnome-screenshot`.
-- **Al arrastrar** entrega `text/uri-list` + `GdkFileList` + la ruta como texto, que es
-  lo que aceptan navegadores, gestores de archivos y apps GTK/Qt/Electron.
-- **Al copiar** entrega además el PNG completo como imagen, para pegar directo en
-  editores o chats.
-- **Al borrar** manda a la papelera (`GIO trash`), nunca borra de forma permanente.
+- **Watches the folders with `GFileMonitor`**: anything that lands there shows up
+  instantly, whether it came from Print Screen, Flameshot or an `scp`.
+- **Autodetects the folders**: `~/Pictures/Screenshots`, its Spanish equivalent, and
+  whatever you have configured in `org.gnome.gnome-screenshot`.
+- **On drag** it offers `text/uri-list` + `GdkFileList` + the path as plain text, which
+  is what browsers, file managers and GTK/Qt/Electron apps accept.
+- **On copy** it also offers the full PNG as an image, so you can paste straight into
+  editors or chats.
+- **On delete** it moves to the trash (`GIO trash`), never deletes permanently.
 
 <details>
-<summary><b>El botón «Capturar» dejó de funcionar</b></summary>
+<summary><b>The «Capture» button stopped working</b></summary>
 
 <br>
 
-En Wayland ninguna app puede capturar la pantalla por su cuenta: hay que pasar por el
-portal (`org.freedesktop.portal.Screenshot`), que muestra la UI de GNOME y pide permiso
-la primera vez. Si alguna vez respondiste *No*, GNOME lo recuerda. Para que vuelva a
-preguntar:
+On Wayland no app can grab the screen on its own: it has to go through the portal
+(`org.freedesktop.portal.Screenshot`), which shows GNOME's capture UI and asks for
+permission the first time. If you ever answered *No*, GNOME remembers. To make it ask
+again:
 
 ```bash
 gdbus call --session --dest org.freedesktop.impl.portal.PermissionStore \
@@ -118,20 +131,20 @@ gdbus call --session --dest org.freedesktop.impl.portal.PermissionStore \
   screenshot screenshot ""
 ```
 
-La tecla **Impr Pant** siempre funciona (la maneja GNOME Shell) y la bandeja recoge el
-resultado igual.
+The **Print Screen** key always works (GNOME Shell handles it) and the shelf picks up
+the result either way.
 
 </details>
 
 <details>
-<summary><b>Ruido en el log</b></summary>
+<summary><b>Log noise</b></summary>
 
 <br>
 
-GTK 4.20 emite `gtk_adjustment_get_value: assertion failed` dos veces por frame
-mientras se interactúa con la ventana. Es benigno y no viene de esta app (no usa
-adjustments), pero llena el journal, así que se filtra ese mensaje puntual. Para ver
-todo sin filtrar:
+GTK 4.20 emits `gtk_adjustment_get_value: assertion failed` twice per frame while you
+interact with the window. It's benign and doesn't come from this app (it uses no
+adjustments), but it floods the journal, so that one message is filtered out. To see
+everything unfiltered:
 
 ```bash
 SHELF_VERBOSE=1 screenshot-shelf
